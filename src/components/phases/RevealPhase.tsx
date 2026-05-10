@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { HoldToReveal } from "@/components/ui/HoldToReveal";
@@ -10,6 +10,11 @@ import { useGame } from "@/lib/game/context";
 export function RevealPhase() {
   const { state, dispatch } = useGame();
   const [confirmed, setConfirmed] = useState(false);
+
+  // プレイヤーが切り替わったら受け渡し画面に戻す
+  useEffect(() => {
+    setConfirmed(false);
+  }, [state.currentRevealIndex]);
 
   const player = state.players[state.currentRevealIndex];
   if (!player) return null;
